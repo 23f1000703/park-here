@@ -1,4 +1,5 @@
 from controllers.database import db 
+from datetime import datetime
 
 class User(db.Model):
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
@@ -9,13 +10,20 @@ class User(db.Model):
     pincode=db.Column(db.Integer,nullable=False)
     is_admin=db.Column(db.Boolean,default=False)
     
-'''class Role(db.model):
-    id=db.column(db.integer,primary_key=True,autoincrement=True)
-    name=db.column(db.string(50),nullable=True)
+class ParkingLot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    address = db.Column(db.String(200))
+    pincode = db.Column(db.String(10))
+    price_per_hour = db.Column(db.Float)
+    max_spots = db.Column(db.Integer)
+    spots = db.relationship('ParkingSpot', backref='lot', cascade='all, delete-orphan')
 
-class user_role(db.model):
-    id=db.column(db.integer,primary_key=True,autoincrement=True)
-    user_id=db.column(db.integer,foreign_key=('user.id'))
-    role_id=db.column(db.integer,foreign_key=('role.id'))
-'''
-
+class ParkingSpot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    is_occupied = db.Column(db.Boolean, default=False)
+    customer_id = db.Column(db.Integer, nullable=True)
+    vehicle_number = db.Column(db.String(20), nullable=True)
+    time_in = db.Column(db.DateTime, nullable=True)
+    cost = db.Column(db.Float, nullable=True)
+    lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.id'))

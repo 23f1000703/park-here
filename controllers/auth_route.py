@@ -30,9 +30,9 @@ def login():
         
         if find1.password == password:
             if find1.is_admin:
-                return render_template('admin_dashboard.html')
+                return redirect('/admin')
             else:
-                return render_template('user_dashboard.html')
+                return redirect('/user')
         
     return render_template("login.html")
            
