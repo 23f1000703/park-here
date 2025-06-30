@@ -1,5 +1,6 @@
 from app import app
-from flask import render_template,request,url_for,redirect,flash,session
+from flask import render_template,request,url_for,redirect,session
+from flask_login import login_user, logout_user, login_required
 from controllers.model import User
 from controllers.database import db
 
@@ -17,22 +18,19 @@ def login():
 
         find1 = User.query.filter_by(email=email).first()
         if not find1:
-            flash("YOUR DETAIL NOT MATCHED")
             return render_template('login.html')
         
         if find1.password != password:
-            flash("Invalid password")
             return render_template('login.html')
         
-        session['user_id'] = find1.id
-        session['email_id'] = find1.email
-        session['is_admin'] = find1.is_admin
+        login_user(find1)
         
         if find1.password == password:
             if find1.is_admin:
                 return redirect('/admin')
             else:
-                return redirect('/user')
+                user_id=find1.id
+                return redirect(url_for('user_dashboard',user_id=find1.id))
         
     return render_template("login.html")
            
@@ -44,7 +42,7 @@ def sign_up():
         formemail = request.form.get('email')
         formaddress = request.form.get('address')
         formpincode = request.form.get('pincode')
-        user = user(name=formname,
+        user = User(name=formname,
                      password=formpassword,
                      email=formemail,
                      address=formaddress,
@@ -54,3 +52,9 @@ def sign_up():
         print('User added')
         return redirect('/login')
     return render_template("create_account.html")
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))

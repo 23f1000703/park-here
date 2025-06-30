@@ -1,7 +1,8 @@
 from controllers.database import db 
 from datetime import datetime
+from flask_login import UserMixin
 
-class User(db.Model):
+class User(db.Model,UserMixin):
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     name=db.Column(db.String(80),nullable=False)
     email=db.Column(db.String(100),nullable=False,unique=True)
@@ -27,3 +28,14 @@ class ParkingSpot(db.Model):
     time_in = db.Column(db.DateTime, nullable=True)
     cost = db.Column(db.Float, nullable=True)
     lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.id'))
+
+class ParkingHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    lot_name = db.Column(db.String(50))
+    lot_address = db.Column(db.String(200))
+    spot_id= db.Column(db.Integer)
+    vehicle_number = db.Column(db.String(20))
+    time_in = db.Column(db.String(20))
+    time_out = db.Column(db.String(20))
+    cost = db.Column(db.Float)

@@ -6,30 +6,47 @@
     <style>
         body {
             background-color: #444242;
-            background-size: cover;
-        }
-
-        .card {
-            background-color: black;
-            color: aliceblue;
-        }
+         }
 
     </style>
 </head>
 <body>
     
 <div class="container mt-5">
-    <h2 class="text-center text-info">Parking Spot Details</h2>
-    <div class="card">
-        <div class="card-body">
-            <p><strong>Spot ID:</strong> {{ spot.id }}</p>
-            <p><strong>User ID:</strong> {{ customer.id }}</p>
-            <p><strong>User Name:</strong> {{ customer.name }}</p>
-            <p><strong>Vehicle number:</strong> {{ spot.vehicle_number }}</p>
-            <p><strong>Paking time:</strong> {{ spot.time_in }}</p>
-            <p><strong> Est. Parking Cost:</strong></p>
-        </div>
-        
+    <div class="card w-60 mx-auto p-1" style="background-color: #201010;">
+    <h4 class="text-center mb-2 text-warning">Parking Spot Details</h4>
     </div>
-       <a href="/admin" class="btn btn-secondary">Close</a>
+            <table class="table table-bordered w-60 mx-auto">
+                <tbody>
+                    <tr>
+                        <th>Spot ID</th>
+                        <td>{{ spot.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>User ID</th>
+                        <td>{{ customer.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>User Name</th>
+                        <td>{{ customer.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Vehicle Number</th>
+                        <td>{{ spot.vehicle_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Parking Time</th>
+                        <td>{{ spot.time_in.strftime('%Y-%m-%d %I:%M %p') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Est. Parking Cost</th>
+                        <td>₹ {{ spot.cost }}</td> 
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end w-60 mx-auto mt-3">
+       <a href="/admin" class="btn btn-danger">Close</a>
+       </div>
 </div>
+</body>
+</html>
