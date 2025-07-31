@@ -139,6 +139,7 @@ def user_summary(user_id):
     plt.xlabel("Spot Name")
     plt.ylabel("No. of Time Spent(Hours)")
     plt.title("Most Visited Parking Spot")
+    plt.ylim(bottom=0)
     plt.tight_layout()
     plt.savefig("static/user_booking.jpg")
     plt.clf()
